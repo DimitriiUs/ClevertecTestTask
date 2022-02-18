@@ -9,7 +9,7 @@ import java.io.PrintWriter;
 
 public class FilePrinter implements CheckPrinter{
     private CheckTemplate checkTemplate;
-    private String fileName = "check.txt";
+    private final String fileName = "check.txt";
 
     public FilePrinter(CheckTemplate checkTemplate) {
         this.checkTemplate = checkTemplate;
