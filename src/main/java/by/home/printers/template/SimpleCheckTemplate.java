@@ -3,7 +3,6 @@ package by.home.printers.template;
 import by.home.Check;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -12,24 +11,21 @@ import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
 
-public class SimpleCheckTemplate implements CheckTemplate{
-    private String TEMPLATE_FILE_NAME = "check_template.txt";
+public class SimpleCheckTemplate implements CheckTemplate {
     private List<String> checkTemplateFileLines = Collections.emptyList();
 
     public SimpleCheckTemplate() {
-        readCheckTemplateFile(TEMPLATE_FILE_NAME);
+        readCheckTemplateFile();
     }
 
-    private void readCheckTemplateFile(String fileName) {
+    private void readCheckTemplateFile() {
+        final String TEMPLATE_FILE = "src/main/resources/check_template.txt";
         try {
             checkTemplateFileLines = Files.readAllLines(
-                    Paths.get(this
-                            .getClass()
-                            .getClassLoader()
-                            .getResource(fileName)
-                            .toURI()),
-                    StandardCharsets.UTF_8);
-        } catch (IOException | URISyntaxException e) {
+                    Paths.get(TEMPLATE_FILE),
+                    StandardCharsets.UTF_8
+            );
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -40,22 +36,18 @@ public class SimpleCheckTemplate implements CheckTemplate{
         LocalDate date = LocalDate.now();
         LocalTime time = LocalTime.now();
         final String NEW_LINE = "\n";
-        final int CHECK_ID_AND_DATE_LINE =  6;
-        final int TIME_LINE =               7;
-        final int PRODUCTS_LINE =           11;
-        final int TOTAL_COST_LINE =         14;
+        final int CHECK_ID_AND_DATE_LINE = 6;
+        final int TIME_LINE = 7;
+        final int PRODUCTS_LINE = 11;
+        final int TOTAL_COST_LINE = 14;
 
         checkTemplateFileLines.forEach(
                 line -> {
                     switch (checkTemplateFileLines.indexOf(line)) {
-                        case CHECK_ID_AND_DATE_LINE ->
-                                result.append(String.format((line), check.getId(), date, date, date)).append(NEW_LINE);
-                        case TIME_LINE ->
-                                result.append(String.format((line), time, time)).append(NEW_LINE);
-                        case PRODUCTS_LINE ->
-                                result.append(createProductsLines(check));
-                        case TOTAL_COST_LINE ->
-                                result.append(String.format((line), check.getTotalPriceForCheck())).append(NEW_LINE);
+                        case CHECK_ID_AND_DATE_LINE -> result.append(String.format((line), check.getId(), date, date, date)).append(NEW_LINE);
+                        case TIME_LINE -> result.append(String.format((line), time, time)).append(NEW_LINE);
+                        case PRODUCTS_LINE -> result.append(createProductsLines(check));
+                        case TOTAL_COST_LINE -> result.append(String.format((line), check.getTotalPriceForCheck())).append(NEW_LINE);
                         default -> result.append(line).append(NEW_LINE);
                     }
                 }
@@ -72,7 +64,7 @@ public class SimpleCheckTemplate implements CheckTemplate{
                 (k, v) -> {
                     result.append(String.format(PRODUCT_LINE,
                             v,
-                            k.getName(),
+                            prepareNameForCheck(k.getName()),
                             k.getPrice(),
                             check.getTotalPriceForProduct(k)));
                     if (check.checkProductForDiscount(k)) {
@@ -84,4 +76,23 @@ public class SimpleCheckTemplate implements CheckTemplate{
 
         return result.toString();
     }
+
+    private String prepareNameForCheck(String name) {
+        StringBuilder sb = new StringBuilder(name);
+        final int MAX_LENGTH_NAME_FOR_CHECK = 20;
+
+        int i = name.length() / MAX_LENGTH_NAME_FOR_CHECK;
+        if (name.length() > MAX_LENGTH_NAME_FOR_CHECK) {
+            sb.insert(20, "............|\n|.....");
+        }
+
+        for (int j = 20; j < i * 10; j += 10) {
+            sb.insert(j + 1, "|     ");
+        }
+
+
+        return sb.toString();
+    }
+
+
 }

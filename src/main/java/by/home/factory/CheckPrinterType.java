@@ -2,7 +2,8 @@ package by.home.factory;
 
 import by.home.printers.CheckPrinter;
 import by.home.printers.ConsolePrinter;
-import by.home.printers.FilePrinter;
+import by.home.printers.TxtPrinter;
+import by.home.printers.PdfPrinter;
 import by.home.printers.template.CheckTemplate;
 
 public enum CheckPrinterType {
@@ -12,10 +13,16 @@ public enum CheckPrinterType {
             return new ConsolePrinter(checkTemplate);
         }
     },
-    FILE("File Printer") {
+    TXT("TXT Printer") {
         @Override
         public CheckPrinter getCheckPrinter(CheckTemplate checkTemplate) {
-            return new FilePrinter(checkTemplate);
+            return new TxtPrinter(checkTemplate);
+        }
+    },
+    PDF("PDF Printer") {
+        @Override
+        public CheckPrinter getCheckPrinter(CheckTemplate checkTemplate) {
+            return new PdfPrinter(checkTemplate);
         }
     };
 

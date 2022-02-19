@@ -7,11 +7,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class FilePrinter implements CheckPrinter{
+public class TxtPrinter implements CheckPrinter{
     private CheckTemplate checkTemplate;
     private final String fileName = "check.txt";
 
-    public FilePrinter(CheckTemplate checkTemplate) {
+    public TxtPrinter(CheckTemplate checkTemplate) {
         this.checkTemplate = checkTemplate;
     }
 

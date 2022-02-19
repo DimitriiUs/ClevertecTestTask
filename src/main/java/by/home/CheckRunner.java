@@ -19,9 +19,12 @@ public class CheckRunner {
         Check check = checkUtils.getCheck(args, productDB, discountCardDB);
 
         SimpleCheckTemplate template = new SimpleCheckTemplate();
-        CheckPrinter printer = CheckPrinterType.CONSOLE.getCheckPrinter(template);
-        CheckPrinter filePrinter = CheckPrinterType.FILE.getCheckPrinter(template);
-        printer.printCheck(check);
-        filePrinter.printCheck(check);
+        CheckPrinter pdfPrinter = CheckPrinterType.PDF.getCheckPrinter(template);
+        CheckPrinter txtPrinter = CheckPrinterType.TXT.getCheckPrinter(template);
+        CheckPrinter consolePrinter = CheckPrinterType.CONSOLE.getCheckPrinter(template);
+
+        txtPrinter.printCheck(check);
+        pdfPrinter.printCheck(check);
+        consolePrinter.printCheck(check);
     }
 }
