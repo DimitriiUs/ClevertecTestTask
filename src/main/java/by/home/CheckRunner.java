@@ -3,6 +3,7 @@ package by.home;
 import by.home.db.DiscountCardDB;
 import by.home.db.ProductDB;
 import by.home.factory.CheckPrinterType;
+import by.home.model.Check;
 import by.home.printers.CheckPrinter;
 import by.home.printers.template.SimpleCheckTemplate;
 
@@ -16,12 +17,13 @@ public class CheckRunner {
         var discountCardDB = new DiscountCardDB(args[CARDS_DB_FILENAME]);
 
         var checkUtils = new CheckUtils();
-        Check check = checkUtils.getCheck(args, productDB, discountCardDB);
+        Check checkJson = checkUtils.getCheck(args, productDB, discountCardDB);
+        Check checkDB = checkUtils.getCheck(args);
 
         SimpleCheckTemplate template = new SimpleCheckTemplate();
         CheckPrinter printer = CheckPrinterType.CONSOLE.getCheckPrinter(template);
         CheckPrinter filePrinter = CheckPrinterType.FILE.getCheckPrinter(template);
-        printer.printCheck(check);
-        filePrinter.printCheck(check);
+        printer.printCheck(checkJson);
+        printer.printCheck(checkDB);
     }
 }

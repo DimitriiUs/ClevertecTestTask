@@ -1,6 +1,6 @@
 package by.home.printers;
 
-import by.home.Check;
+import by.home.model.Check;
 import by.home.printers.template.CheckTemplate;
 
 public class ConsolePrinter implements CheckPrinter {

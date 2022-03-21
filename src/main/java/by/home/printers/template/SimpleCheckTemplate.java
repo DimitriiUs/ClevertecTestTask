@@ -1,6 +1,6 @@
 package by.home.printers.template;
 
-import by.home.Check;
+import by.home.model.Check;
 
 import java.io.IOException;
 import java.net.URISyntaxException;

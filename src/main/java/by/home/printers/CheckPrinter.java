@@ -1,6 +1,6 @@
 package by.home.printers;
 
-import by.home.Check;
+import by.home.model.Check;
 
 public interface CheckPrinter {
     void printCheck(Check check);

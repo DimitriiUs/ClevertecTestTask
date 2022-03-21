@@ -1,4 +1,4 @@
-package by.home;
+package by.home.model;
 
 public class DiscountCard {
     private int id;
