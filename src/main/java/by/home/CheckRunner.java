@@ -6,6 +6,10 @@ import by.home.factory.CheckPrinterType;
 import by.home.model.Check;
 import by.home.printers.CheckPrinter;
 import by.home.printers.template.SimpleCheckTemplate;
+import by.home.utils.CheckUtils;
+import com.itextpdf.text.DocumentException;
+
+import java.io.IOException;
 
 public class CheckRunner {
 
@@ -20,10 +24,22 @@ public class CheckRunner {
         Check checkJson = checkUtils.getCheck(args, productDB, discountCardDB);
         Check checkDB = checkUtils.getCheck(args);
 
-        SimpleCheckTemplate template = new SimpleCheckTemplate();
-        CheckPrinter printer = CheckPrinterType.CONSOLE.getCheckPrinter(template);
-        CheckPrinter filePrinter = CheckPrinterType.FILE.getCheckPrinter(template);
-        printer.printCheck(checkJson);
-        printer.printCheck(checkDB);
+        SimpleCheckTemplate template = null;
+        try {
+            template = new SimpleCheckTemplate();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        CheckPrinter pdfPrinter = CheckPrinterType.PDF.getCheckPrinter(template);
+        CheckPrinter txtPrinter = CheckPrinterType.TXT.getCheckPrinter(template);
+        CheckPrinter consolePrinter = CheckPrinterType.CONSOLE.getCheckPrinter(template);
+
+        try {
+            txtPrinter.printCheck(checkDB);
+            pdfPrinter.printCheck(checkDB);
+            consolePrinter.printCheck(checkDB);
+        } catch (IOException | DocumentException e) {
+            e.printStackTrace();
+        }
     }
 }

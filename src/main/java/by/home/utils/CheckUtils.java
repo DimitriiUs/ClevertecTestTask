@@ -1,4 +1,4 @@
-package by.home;
+package by.home.utils;
 
 import by.home.dao.DiscountCardsDao;
 import by.home.dao.ProductsDao;
