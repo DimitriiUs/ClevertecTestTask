@@ -1,6 +1,6 @@
 package by.home.db;
 
-import by.home.DiscountCard;
+import by.home.model.DiscountCard;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

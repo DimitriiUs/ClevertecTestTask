@@ -1,6 +1,7 @@
 package by.home.printers.template;
 
-import by.home.Check;
+import by.home.model.Check;
+import by.home.utils.Constants;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -13,21 +14,17 @@ import java.util.List;
 
 public class SimpleCheckTemplate implements CheckTemplate {
     private List<String> checkTemplateFileLines = Collections.emptyList();
+    private Constants constants = Constants.getInstance();
 
-    public SimpleCheckTemplate() {
+    public SimpleCheckTemplate() throws IOException {
         readCheckTemplateFile();
     }
 
-    private void readCheckTemplateFile() {
-        final String TEMPLATE_FILE = "src/main/resources/check_template.txt";
-        try {
-            checkTemplateFileLines = Files.readAllLines(
-                    Paths.get(TEMPLATE_FILE),
-                    StandardCharsets.UTF_8
-            );
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void readCheckTemplateFile() throws IOException {
+        checkTemplateFileLines = Files.readAllLines(
+                Paths.get(constants.TXT_TEMPLATE),
+                StandardCharsets.UTF_8
+        );
     }
 
     @Override

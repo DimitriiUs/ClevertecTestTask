@@ -1,7 +1,10 @@
-package by.home;
+package by.home.utils;
 
 import by.home.db.DiscountCardDB;
 import by.home.db.ProductDB;
+import by.home.model.Check;
+import by.home.model.DiscountCard;
+import by.home.model.Product;
 
 import java.util.HashMap;
 import java.util.Map;
