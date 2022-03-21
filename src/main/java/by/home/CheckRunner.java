@@ -3,8 +3,13 @@ package by.home;
 import by.home.db.DiscountCardDB;
 import by.home.db.ProductDB;
 import by.home.factory.CheckPrinterType;
+import by.home.model.Check;
 import by.home.printers.CheckPrinter;
 import by.home.printers.template.SimpleCheckTemplate;
+import by.home.utils.CheckUtils;
+import com.itextpdf.text.DocumentException;
+
+import java.io.IOException;
 
 public class CheckRunner {
 
@@ -18,13 +23,22 @@ public class CheckRunner {
         var checkUtils = new CheckUtils();
         Check check = checkUtils.getCheck(args, productDB, discountCardDB);
 
-        SimpleCheckTemplate template = new SimpleCheckTemplate();
+        SimpleCheckTemplate template = null;
+        try {
+            template = new SimpleCheckTemplate();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         CheckPrinter pdfPrinter = CheckPrinterType.PDF.getCheckPrinter(template);
         CheckPrinter txtPrinter = CheckPrinterType.TXT.getCheckPrinter(template);
         CheckPrinter consolePrinter = CheckPrinterType.CONSOLE.getCheckPrinter(template);
 
-        txtPrinter.printCheck(check);
-        pdfPrinter.printCheck(check);
-        consolePrinter.printCheck(check);
+        try {
+            txtPrinter.printCheck(check);
+            pdfPrinter.printCheck(check);
+            consolePrinter.printCheck(check);
+        } catch (IOException | DocumentException e) {
+            e.printStackTrace();
+        }
     }
 }

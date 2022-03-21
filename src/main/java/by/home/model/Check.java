@@ -1,4 +1,4 @@
-package by.home;
+package by.home.model;
 
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
