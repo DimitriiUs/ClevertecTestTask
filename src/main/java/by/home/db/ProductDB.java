@@ -1,6 +1,6 @@
 package by.home.db;
 
-import by.home.Product;
+import by.home.model.Product;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

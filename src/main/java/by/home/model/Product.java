@@ -1,4 +1,4 @@
-package by.home;
+package by.home.model;
 
 public class Product {
     private int id;

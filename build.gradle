@@ -24,6 +24,8 @@ dependencies {
             "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
 
     compileOnly 'org.apache.tomcat:tomcat-servlet-api:9.0.59'
+
+    implementation 'org.postgresql:postgresql:42.3.3'
 }
 
 tomcat {
